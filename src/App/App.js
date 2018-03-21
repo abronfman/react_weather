@@ -6,7 +6,7 @@ import "./App.css";
 
 const PLACES = [
   { name: 'Columbia', zip: 21044 },
-  { name: 'Baltimore', zip: 21209 },
+  { name: 'Baltimore', zip: 21202 },
   { name: 'San Jose', zip: 94088 },
   { name: 'Austin', zip: 73301 }
 ];
