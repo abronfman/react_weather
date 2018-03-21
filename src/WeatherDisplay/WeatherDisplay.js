@@ -1,10 +1,45 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 
 export default class WeatherDisplay extends Component {
+  constructor() {
+    super();
+    this.state = {
+      weatherData: null
+    };
+  };
+  componentDidMount() {
+    const zip = this.props.zip;
+    const URL = "http://api.openweathermap.org/data/2.5/weather?zip=" +
+      zip + ",us&appid=a7f1406dacbe3066d7fe15a68e84eb0a&units=imperial";
+
+    console.log(URL);
+    fetch(URL)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ weatherData: json });
+      });
+  };
+
   render() {
+    const weatherData = this.state.weatherData;
+    if (!weatherData) {
+      return <div>Loading...</div>
+    }
+
+    const weather = weatherData.weather[0];
+    const iconUrl = "http://openweathermap.org/img/w/" + weather.icon + ".png";
+
     return (
-      <h1>Displaying some weather for: {this.props.zip}</h1>
+      <div>
+        <h1>{weather.main} in {weatherData.name}
+          <img src={iconUrl} alt={weatherData.description} />
+        </h1>
+        <p>Current: {weatherData.main.temp}</p>
+        <p>High: {weatherData.main.temp_max}</p>
+        <p>Low: {weatherData.main.temp_min}</p>
+        <p>Wind: {weatherData.wind.speed} mi/hr</p>
+      </div>
     );
   }
 }
