@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import WeatherDisplay from '../WeatherDisplay/WeatherDisplay';
+import '../../node_modules/bootswatch/dist/lux/bootstrap.css';
+import { Navbar, NavItem, Nav, Grid, Row, Col } from 'react-bootstrap';
 
 import logo from "../../src/logo.svg";
 import "./App.css";
@@ -20,29 +22,35 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to the weather app</h1>
-        </header>
-        <p className="App-intro">
-          Some intro text here
-        </p>
-        <div>
-          {PLACES.map((place, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                this.setState(() => ({
-                  activePlace: index
-                }));
-              }}>
-              {place.name}</button>
-          ))}
-          <WeatherDisplay
-            key={this.state.activePlace}
-            zip={PLACES[this.state.activePlace].zip} />
-        </div>
+      <div>
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              React Simple Weather App
+            </Navbar.Brand>
+          </Navbar.Header>
+        </Navbar>
+        <Grid>
+          <Row>
+            <Col md={4} sm={4}>
+              <h3>Select a city</h3>
+              <Nav
+                bsStyle="pills"
+                stacked
+                activeKey={this.state.activePlace}
+                onSelect={index => {
+                  this.setState({ activePlace: index });
+                }}>
+                {PLACES.map((place, index) => (
+                  <NavItem key={index} eventKey={index}>{place.name}</NavItem>
+                ))}
+              </Nav>
+            </Col>
+            <Col md={8} sm={8}>
+              <WeatherDisplay key={this.state.activePlace} zip={PLACES[this.state.activePlace].zip} />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }

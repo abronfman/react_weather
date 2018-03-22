@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Navbar, NavItem, Nav, Grid, Row, Col } from 'react-bootstrap';
 
 
 export default class WeatherDisplay extends Component {
@@ -13,7 +15,6 @@ export default class WeatherDisplay extends Component {
     const URL = "http://api.openweathermap.org/data/2.5/weather?zip=" +
       zip + ",us&appid=a7f1406dacbe3066d7fe15a68e84eb0a&units=imperial";
 
-    console.log(URL);
     fetch(URL)
       .then(res => res.json())
       .then(json => {
@@ -32,6 +33,7 @@ export default class WeatherDisplay extends Component {
 
     return (
       <div>
+
         <h1>{weather.main} in {weatherData.name}
           <img src={iconUrl} alt={weatherData.description} />
         </h1>
